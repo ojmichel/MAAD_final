@@ -7,8 +7,8 @@ import matplotlib.animation as animation
 
 class Grid(object):
 
-    WIDTH = 100
-    HEIGHT = 100
+    WIDTH = 25
+    HEIGHT = 25
     DIMENSION = 3
 
     def __init__(self,fp=None):
@@ -38,7 +38,9 @@ class Grid(object):
 
         self.A = 100.0
         self.R = 100.0
-        self.sigma = 10.0
+        self.sigma = 10
+        self.mode = -1.0
+        self.t = 10
 
 
 
@@ -46,7 +48,9 @@ class Grid(object):
     def update(self):
         for x in range(self.WIDTH):
             for y in range(self.HEIGHT):
-                self.grid[x,y] += self.attract(x,y) + self.repel(x,y) + self.random()
+                self.grid[x,y] += self.attract(x,y,mix=self.mode) + self.repel(x,y) + self.random()
+                # self.grid[x,y] += self.bars(x,y) + self.repel(x,y) + self.random()
+
                 self.embed(x,y)
         self.display_grid = (self.grid + 1.0)* (255.0 / 2.0)
         self.display_grid.dtype='int64'
@@ -55,53 +59,24 @@ class Grid(object):
     def get_neighbors(self,x,y):
         return np.array([self.grid[i,j] for i,j in self.neighbors[x,y]])
 
-    def bars(self,x,y):
-        neighbors = self.get_neighbors(x, y)
-        v = self.grid[x, y]
-        delta = np.zeros(3)
-        for n in neighbors:
-            delta += self.A * np.exp(-np.linalg.norm(n - v)) * (n - v)
-        # print(delta / len(neighbors))
-        # v = self.grid[x,y]
-        # n = self.get_neighbors(x,y)
-        # norm = np.linalg.norm(n - v,axis=1)
-        # e = self.A*np.exp(norm)
-        # delta = np.sum(e)*(n - v)
-        return delta / len(neighbors)
-
-    def attract(self,x,y):
+    def attract(self,x,y,mix=1.0): #-1.0 get bar mode
         v = self.grid[x,y]
         n = self.get_neighbors(x,y)
         norm = np.linalg.norm(n - v,axis=1)
-        e = self.A*np.exp(norm)
+        e = self.A*np.exp(mix*norm)
         delta = np.sum((e * (n-v).T).T,axis=0)
         return delta / len(n)
 
     def repel(self,x,y):
-        # neighbors = self.get_neighbors(x, y)
-        # v = self.grid[x, y]
-        # f=0.0
-        # delta = np.zeros(3)
-        # for n in neighbors:
-        #     delta += self.R*np.tanh(np.linalg.norm(n - v) - f)*(v - n)
 
-        # print(delta/len(neighbors))
         v = self.grid[x, y]
         n = self.get_neighbors(x, y)
         f = 0.0
         norm = np.linalg.norm(n - v, axis=1)
         t = self.R * np.tanh(norm - f)
-        delta = np.sum((t * (n - v).T).T, axis=0)
+        delta = np.sum((t * (v - n).T).T, axis=0)
         return delta / len(n)
 
-    def bump(self,x,y):
-        neighbors = self.get_neighbors(x, y)
-        v = self.grid[x, y]
-        delta = np.zeros(3)
-        for n in neighbors:
-            delta += self.R * np.exp(1.0 / (1/(np.linalg.norm(n - v)**2 - 1))) * (v - n)
-        # print(delta/len(neighbors))
-        return delta / len(neighbors)
 
 
     def random(self):
@@ -133,13 +108,13 @@ class Grid(object):
         # self.fig.canvas.mpl_connect('close_event',self.on_close)
         self.p1 = self.fig.add_subplot(2, 1, 1)
         self.p2 = self.fig.add_subplot(2, 1, 2,projection='3d')
-        self.ani1 = animation.FuncAnimation(self.fig, self.plot1, self.gen, interval=1000)
-        self.ani2 = animation.FuncAnimation(self.fig, self.plot2, self.gen, interval=1000)
+        self.ani1 = animation.FuncAnimation(self.fig, self.plot1, self.gen)
+        self.ani2 = animation.FuncAnimation(self.fig, self.plot2, self.gen)
         plt.show()
 
 
 
 if __name__ == '__main__':
-    Grid(fp='salty.jpeg').run()
-    # Grid().run()
+    # Grid(fp='image100.jpeg').run()
+    Grid().run()
 
