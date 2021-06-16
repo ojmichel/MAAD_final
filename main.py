@@ -127,8 +127,6 @@ class Grid(object):
 
         while True:
             self.update()
-            if self.t == 2:
-                time.sleep(3)
             yield self.grid
 
 
