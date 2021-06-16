@@ -6,6 +6,8 @@ The second equation embeddeds the pixel vector into a sphere which forces pixels
 
 Here is an example run:
 
+![example](run.gif)
+
 For some cool examples try running:
 
 `python3 main.py --W 25 --H 25 --mode mix --sigma 10.0  --rad 1.0 --s demo3.mp4`
