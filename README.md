@@ -6,8 +6,7 @@ This is my final project for Media Art Design and Practice. Inspired by cellular
 
 Pixels that are similar in color space will be attracted to each other and disimlar neighbors will repel each other. The second equation embeddeds the pixel vector into a sphere which forces pixels to interact with each other (they can’t avoid interaction by going off to infinity).
 
-Here is an example run:
-
+In the example run below, the pixels start out with zero value and the striped patterns emerge very quickly.
 ![example](https://github.com/ojmichel/MAAD_final/blob/master/run.gif)
 
 For some cool examples try running:
