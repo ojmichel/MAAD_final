@@ -2,7 +2,9 @@
 
 This is my final project for Media Art Design and Practice. Inspired by cellular automata, I wanted to build something where structure emerges over time in a simulation governed by mathematical rules. The problem with these simulations however is that they mostly rely on hand-crafted initialization states for interesting patterns to emerge, and they are entirely deterministic. I wanted to make something where patterns would consitently emerge from nothing, and that would also evolve with some randomness. To do this, I used the following equations to update the value of a pixel based off the value of it's neighbors:
 
-The second equation embeddeds the pixel vector into a sphere which forces pixels to interact with each other (they can’t avoid interaction by going off to infinity).
+![](equations.png)
+
+Pixels that are similar in color space will be attracted to each other and disimlar neighbors will repel each other. The second equation embeddeds the pixel vector into a sphere which forces pixels to interact with each other (they can’t avoid interaction by going off to infinity).
 
 Here is an example run:
 
