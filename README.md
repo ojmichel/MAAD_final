@@ -6,7 +6,7 @@ The second equation embeddeds the pixel vector into a sphere which forces pixels
 
 Here is an example run:
 
-![example](run.gif)
+![example](https://github.com/ojmichel/MAAD_final/blob/master/run.gif)
 
 For some cool examples try running:
 
