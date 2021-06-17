@@ -24,8 +24,8 @@ For some cool examples try running:
 
 `python3 main.py --W 25 --H 25 --mode bar --sigma 10.0  --rad 1.0 --f image100.jpeg --s demo5.mp4`
 
-# Dependency 
+# Dependencies 
 
--numpy
--opencv
--matplotlib
+* numpy
+* opencv
+* matplotlib
